@@ -26,6 +26,7 @@
 	"dependencies": {
 		"bits-ui": "^0.9.9",
 		"clsx": "^2.0.0",
+		"express": "^4.18.2",
 		"lucide-svelte": "^0.292.0",
 		"mode-watcher": "^0.1.1",
 		"tailwind-merge": "^2.0.0",

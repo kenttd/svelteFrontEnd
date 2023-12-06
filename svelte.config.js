@@ -12,26 +12,38 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 // };
 
 // export default config;
-import adapter from '@sveltejs/adapter-static';
+// import adapter from '@sveltejs/adapter-dynamic';
 // was "@sveltejs/adapter-auto"
 
-const dev = 'production' === 'development';
+// const dev = 'production' === 'development';
 
-/** @type {import(""@sveltejs/kit").Config} */
+// /** @type {import(""@sveltejs/kit").Config} */
+// const config = {
+// 	kit: {
+// 		adapter: adapter({
+// 			pages: 'docs',
+// 			assets: 'docs'
+// 		}),
+// 		// paths: {
+// 		// 	// change below to your repo name
+// 		// 	base: dev ? '' : '/svelteFrontEnd'
+// 		// }
+// 		// hydrate the <div id="svelte"> element in src/app.html
+// 	},
+
+// 	preprocess: [vitePreprocess({})]
+// };
+
+import adapter from '@sveltejs/adapter-node';
+/** @type {import('@sveltejs/kit').Config} */
 const config = {
-	kit: {
-		adapter: adapter({
-			pages: 'docs',
-			assets: 'docs'
-		}),
-		paths: {
-			// change below to your repo name
-			base: dev ? '' : '/svelteFrontEnd'
-		}
-		// hydrate the <div id="svelte"> element in src/app.html
-	},
-
-	preprocess: [vitePreprocess({})]
+  kit: {
+    adapter: adapter(),
+    prerender: {
+      enabled: false,
+      entries: ['*'],
+    },
+    // ...other options...
+  },
 };
-
 export default config;

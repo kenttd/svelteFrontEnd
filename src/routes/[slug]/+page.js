@@ -1,6 +1,7 @@
-import { error } from '@sveltejs/kit';
-export const prerender = true;
+export const prerender = false;
 export const ssr = true;
+import { error } from '@sveltejs/kit';
+
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
