@@ -1,3 +1,10 @@
+// import adapter from '@sveltejs/adapter-node';
+
+// export default {
+// 	kit: {
+// 		adapter: adapter()
+// 	}
+// };
 import { vitePreprocess } from '@sveltejs/kit/vite';
 // import adapter from '@sveltejs/adapter-auto';
 
@@ -34,16 +41,4 @@ const config = {
 	preprocess: [vitePreprocess({})]
 };
 
-// import adapter from '@sveltejs/adapter-node';
-// /** @type {import('@sveltejs/kit').Config} */
-// const config = {
-//   kit: {
-//     adapter: adapter(),
-//     prerender: {
-//       enabled: false,
-//       entries: ['*'],
-//     },
-//     // ...other options...
-//   },
-// };
 export default config;
