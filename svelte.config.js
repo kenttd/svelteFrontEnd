@@ -12,7 +12,7 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 // };
 
 // export default config;
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-auto';
 // was "@sveltejs/adapter-auto"
 
 const dev = 'production' === 'development';
