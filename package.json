@@ -8,10 +8,9 @@
 		"preview": "vite preview",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
-		"start": "sirv public --single",
-  "start:dev": "sirv public --dev --single",
-		
-    "heroku-postbuild": "npm run build"
+		"start": "node build/index.js --host 127.0.0.1 --port 8080",
+		"start:dev": "http-server .svelte-kit/output -c-1 --single",
+		"heroku-postbuild": "npm run build"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
@@ -19,27 +18,27 @@
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "1.27.7",
 		"autoprefixer": "^10.4.14",
+		"http-server": "^14.1.1",
 		"postcss": "^8.4.24",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^3.0.0",
 		"prettier-plugin-tailwindcss": "^0.4.1",
+		"serve": "^14.2.1",
 		"svelte": "^4.0.5",
 		"tailwindcss": "^3.3.2"
-		
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/kit": "1.27.7",
-		"undici": "5.26.5",
 		"@fastify/busboy": "2.1.0",
+		"@sveltejs/kit": "1.27.7",
 		"bits-ui": "^0.9.9",
 		"clsx": "^2.0.0",
 		"express": "^4.18.2",
 		"lucide-svelte": "^0.292.0",
 		"mode-watcher": "^0.1.1",
-		"serve": "^14.2.1",
 		"tailwind-merge": "^2.0.0",
 		"tailwind-variants": "^0.1.18",
+		"undici": "5.26.5",
 		"vite": "^4.5.1"
 	}
 }
