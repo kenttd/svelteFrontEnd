@@ -8,7 +8,7 @@
 		"preview": "vite preview",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
-		"start": "node build/index.js --host 127.0.0.1 --port 8080",
+		"start": "node build/index.js",
 		"start:dev": "http-server .svelte-kit/output -c-1 --single",
 		"heroku-postbuild": "npm run build"
 	},
