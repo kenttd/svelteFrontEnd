@@ -36,6 +36,7 @@
 			// Check if the request was successful (status code 2xx)
 			if (response.ok) {
 				const jsonData = await response.json();
+				console.log(jsonData);
 				posts = jsonData.posts;
 				console.log(posts);
 				// let uid = jsonData.UserID;
@@ -230,11 +231,13 @@
 				class="max-w-xs"
 				bind:value={userInput}
 			/>
-			{#if searchResult != null}
-				{#each searchResult as search}
-					<Search {search} />
-				{/each}
-			{/if}
+			<div>
+				{#if searchResult != null}
+					{#each searchResult as search}
+						<Search {search} />
+					{/each}
+				{/if}
+			</div>
 		</div>
 		<div class="flex-1 justify-between">
 			<div class="flex h-5 items-center">Direct Messages</div>
