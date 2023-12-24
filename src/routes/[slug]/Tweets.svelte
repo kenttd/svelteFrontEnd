@@ -39,8 +39,7 @@
 </script>
 
 <!-- <h1>{post.TweetContent}</h1> -->
-
-<Card.Root class=" mt-5">
+<Card.Root class="mt-5" style="width:700px;height: fit-content;">
 	<Card.Header>
 		<div class="flex justify-start">
 			<Card.Title class="flex align-middle">
