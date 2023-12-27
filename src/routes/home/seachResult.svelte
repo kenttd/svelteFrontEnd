@@ -5,12 +5,12 @@
 	export let search;
 
 	function gotoUser() {
-		goto('/' + search.Username);
+		window.location.href = '/' + username;
 	}
 </script>
 
-<Card.Root class=" mt-5" on:click={() => gotoUser()}>
-	<Card.Header>
+<Card.Root class=" mt-5">
+	<Card.Header on:click={() => gotoUser()}>
 		<div class="flex justify-start">
 			<Card.Title class="flex align-middle">
 				<Avatar.Root class="me-2">

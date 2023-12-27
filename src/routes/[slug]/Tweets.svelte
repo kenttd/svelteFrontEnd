@@ -42,12 +42,12 @@
 <Card.Root class="mt-5" style="width:700px;height: fit-content;">
 	<Card.Header>
 		<div class="flex justify-start">
-			<Card.Title class="flex align-middle">
+			<Card.Title class="flex items-center">
 				<Avatar.Root class="me-2">
 					<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
 					<Avatar.Fallback>CN</Avatar.Fallback>
 				</Avatar.Root>
-				{post.UserID}
+				{post.user.Username}
 			</Card.Title>
 			<Card.Description class="ms-4">{result}</Card.Description>
 		</div>

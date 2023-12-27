@@ -6,6 +6,15 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Sun, Moon } from 'lucide-svelte';
 	import { toggleMode, userPrefersMode } from 'mode-watcher';
+	import { SvelteToast, toast } from '@zerodevx/svelte-toast/dist';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const app = new SvelteToast({
+			target: document.body,
+			props: {}
+		});
+	});
 	function makecookie(key, value, days) {
 		var expirationDate = new Date();
 		expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000 * days);
@@ -44,10 +53,13 @@
 			if (response.ok) {
 				const jsonData = await response.json();
 				let uid = jsonData.UserID;
+				toast.push('Login success, please wait...');
 				makecookie('uid', uid, 3);
+				makecookie('username', jsonData.Username, 3);
 				location.reload();
 			} else {
 				console.error('Error:', response.statusText);
+				toast.push('Login failed, wrong password/username.');
 			}
 		} catch (error) {
 			console.error('Error:', error);

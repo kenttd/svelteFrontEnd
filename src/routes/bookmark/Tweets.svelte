@@ -7,7 +7,8 @@
 	import { onMount } from 'svelte';
 	import Dropdown from './dropdown.svelte';
 	import { Repeat2, MessageCircle, Heart } from 'lucide-svelte';
-	export let post;
+	export let bookmark;
+	let post = bookmark.tweet;
 	let colorLike = 'white';
 	onMount(() => {
 		if (post.liked) {
@@ -46,36 +47,84 @@
 		result += `${minutes}m`;
 	}
 	let liked = post.liked;
-	let LikeID = post.likeid ?? '';
+	let LikeID = '';
 	console.log(liked);
-	console.log('likeID', LikeID);
 	async function like() {
 		if (!liked) {
 			likes++;
 			liked = true;
-			colorLike = 'red';
-			const data = await doLike(post.TweetID, LikeID != '', LikeID);
-			LikeID = data.LikeID;
-			console.log('like data', LikeID);
+			const data = doLike(post.TweetID, LikeID != '', LikeID);
+			console.log(data);
 		} else {
 			likes--;
 			liked = false;
-			colorLike = 'white';
-			const data = doUnLike(post.TweetID, LikeID);
+			const data = doUnLike(post.TweetID, LikeID != '');
 			console.log(data);
 		}
 	}
-	console.log('liked', liked);
+	// console.log('liked', liked);
 	// console.log(minutes, hours, days);
-	console.log(specificDateStr);
+	// console.log(specificDateStr);
 	likes = post.LikesCount;
 	retweet = post.RetweetsCount;
 	replies = post.RepliesCount;
-	let link = `/quack/${post.TweetID}`;
 </script>
 
-<a href={link}>
-	<Card.Root class=" mt-5">
+<Card.Root class=" mt-5">
+	<Card.Header>
+		<div class="flex justify-start">
+			<Card.Title class="flex align-middle">
+				<Avatar.Root class="me-2">
+					<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
+					<Avatar.Fallback>CN</Avatar.Fallback>
+				</Avatar.Root>
+				<Button variant="link">{post.user.Username}</Button>
+			</Card.Title>
+			<Card.Description class="ms-4">{result}</Card.Description>
+		</div>
+	</Card.Header>
+
+	<Card.Content>
+		{post.TweetContent}
+	</Card.Content>
+	<Card.Footer class="">
+		<div class="flex justify-start">
+			<button class="flex like" on:click={() => like()}>
+				<div class="flex items-center">
+					<Heart fill={colorLike} color={colorLike == 'red' ? 'red' : 'black'} size="19" />
+					<span class="likes ms-1">{likes}</span>
+				</div>
+			</button>
+			<button class="flex ms-3">
+				<div class="flex items-center">
+					<Repeat2 size="19" />
+					<span class="ms-1">{post.RetweetsCount}</span>
+				</div>
+			</button>
+		</div>
+		<div class="flex justify-end">
+			<button class="flex ms-3">
+				<div class="flex items-center">
+					<MessageCircle size="19" />
+					<span class="ms-1">{post.RepliesCount}</span>
+				</div>
+			</button>
+		</div>
+
+		<Dropdown BookmarkID={bookmark.BookmarkID} />
+	</Card.Footer>
+</Card.Root>
+
+<!-- <HoverCard.Root>
+	<HoverCard.Content class="w-80">
+		<span class="align-top inline-block">test</span>
+	</HoverCard.Content>
+	<HoverCard.Trigger
+		href="https://github.com/sveltejs"
+		target="_blank"
+		rel="noreferrer noopener"
+		class="hover:underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-black"
+	>
 		<Card.Header>
 			<div class="flex justify-start">
 				<Card.Title class="flex align-middle">
@@ -83,43 +132,13 @@
 						<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
 						<Avatar.Fallback>CN</Avatar.Fallback>
 					</Avatar.Root>
-					<Button variant="link">{post.user.Username}</Button>
+					{post.user.Username}
 				</Card.Title>
 				<Card.Description class="ms-4">{result}</Card.Description>
 			</div>
 		</Card.Header>
-
-		<Card.Content>
-			{post.TweetContent}
-		</Card.Content>
-		<Card.Footer class="">
-			<div class="flex justify-start">
-				<button class="flex like" on:click={() => like()}>
-					<div class="flex items-center">
-						<Heart fill={colorLike} color={colorLike == 'red' ? 'red' : 'black'} size="19" />
-						<span class="likes ms-1">{likes}</span>
-					</div>
-				</button>
-				<button class="flex ms-3">
-					<div class="flex items-center">
-						<Repeat2 size="19" />
-						<span class="ms-1">{post.RetweetsCount}</span>
-					</div>
-				</button>
-			</div>
-			<div class="flex justify-end">
-				<button class="flex ms-3">
-					<div class="flex items-center">
-						<MessageCircle size="19" />
-						<span class="ms-1">{post.RepliesCount}</span>
-					</div>
-				</button>
-			</div>
-
-			<Dropdown TweetID={post.TweetID} />
-		</Card.Footer>
-	</Card.Root>
-</a>
+	</HoverCard.Trigger>
+</HoverCard.Root> -->
 
 <style>
 	:global(.heart):hover {
