@@ -11,6 +11,7 @@
 	const hasVal = url.searchParams.has('q');
 	const val = url.searchParams.get('q');
 	let input;
+	function search() {}
 </script>
 
 <div class="flex space-x-4 text-sm justify-end h-screen mt-3">

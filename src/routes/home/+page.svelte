@@ -196,7 +196,7 @@
 	:global(body) {
 		overflow: hidden;
 	}
-	.navbar {
+	/* .navbar {
 		background-color: rgb(48, 169, 244);
 	}
 
@@ -210,5 +210,5 @@
 
 	svg {
 		margin-right: 20px;
-	}
+	} */
 </style>

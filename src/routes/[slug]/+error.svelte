@@ -9,6 +9,7 @@
 	import Search from './../home/seachResult.svelte';
 	import Navbar from './../navbar.svelte';
 	let userInput, searchResult;
+	function search() {}
 </script>
 
 <div class="flex space-x-4 text-sm justify-end h-screen mt-3">

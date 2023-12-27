@@ -13,6 +13,7 @@
 	export let data;
 	let user = data.data.user;
 	let userInput, searchResult;
+	function search() {}
 </script>
 
 <div class="flex space-x-4 text-sm justify-end h-screen mt-3">

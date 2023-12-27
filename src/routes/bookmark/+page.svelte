@@ -40,6 +40,9 @@
 			console.error('Error:', error);
 		}
 	}
+	function search(){
+		
+	}
 </script>
 
 <div class="flex space-x-4 text-sm justify-end h-screen mt-3">
