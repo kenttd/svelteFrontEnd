@@ -111,7 +111,7 @@
 			</button>
 		</div>
 
-		<Dropdown BookmarkID={bookmark.BookmarkID} />
+		<Dropdown BookmarkID={bookmark.BookmarkID} TweetID={post.TweetID} />
 	</Card.Footer>
 </Card.Root>
 

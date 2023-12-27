@@ -11,7 +11,7 @@
 			props: {}
 		});
 	});
-	export let BookmarkID;
+	export let BookmarkID, TweetID;
 	async function removeBookmark() {
 		const data = await removeFromBookmark(BookmarkID);
 		console.log('bookmark', data);
