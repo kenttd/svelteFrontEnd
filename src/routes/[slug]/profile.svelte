@@ -1,18 +1,23 @@
 <script>
 	import { Separator } from '$lib/components/ui/separator';
 	import * as Avatar from '$lib/components/ui/avatar';
+	import { Button } from '$lib/components/ui/button';
 	import Tweets from './Tweets.svelte';
+	import More from './more.svelte';
 	import { onMount } from 'svelte';
-	import { CalendarDays } from 'lucide-svelte';
-
-	import { getCookie } from './../helper';
+	import { CalendarDays, BadgeCheck, Wrench, Link } from 'lucide-svelte';
+	import { getCookie, doFollow, doUnFollow } from './../helper';
 	import Edit from './editProfile.svelte';
+	import * as Tooltip from '$lib/components/ui/tooltip';
 	export let user;
-	let posts;
+	let posts, isFollowing, isFollowed;
+	let CurrentUser, follower, following;
 	onMount(() => {
 		getUserPost();
+		CurrentUser = getCookie('username');
+		follower = user.Followers;
+		following = user.Following;
 	});
-
 	const userjoindate = new Date(user.created_at);
 	const dateString = userjoindate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
@@ -21,9 +26,15 @@
 	const joined = `${month} ${day}`;
 	// Displaying the result
 	function getUserPost() {
-		return fetch('https://quacker-1fcd875a5802.herokuapp.com/api/getpost/' + user.UserID, {
-			method: 'GET'
-		})
+		return fetch(
+			'https://quacker-1fcd875a5802.herokuapp.com/api/getpost/' +
+				user.UserID +
+				'/' +
+				getCookie('uid'),
+			{
+				method: 'GET'
+			}
+		)
 			.then((response) => {
 				// Check if the request was successful (status code 2xx)
 				if (response.ok) {
@@ -37,12 +48,23 @@
 				console.log('json');
 				console.log(jsonData);
 				posts = jsonData.tweets;
+				isFollowed = jsonData.isFollowed;
+				isFollowing = jsonData.isFollowing;
 				console.log('asli');
 				console.log(posts);
 			})
 			.catch((error) => {
 				console.error('Error:', error);
 			});
+	}
+
+	function follow() {
+		isFollowing = true;
+		doFollow(getCookie('uid'), user.UserID);
+	}
+	function unfollow() {
+		isFollowing = false;
+		doUnFollow(getCookie('uid'), user.UserID);
 	}
 </script>
 
@@ -53,25 +75,56 @@
 				<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
 				<Avatar.Fallback>CN</Avatar.Fallback>
 			</Avatar.Root>
-			{user.Username}
+			<span class="me-2">{user.Username}</span>
+			{#if user.isVerified}
+				<Tooltip.Root>
+					<Tooltip.Trigger asChild let:builder>
+						<Button builders={[builder]} variant="ghost" size="icon"><BadgeCheck /></Button>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
+						<p>This user is verified.</p>
+					</Tooltip.Content>
+				</Tooltip.Root>
+			{/if}
+			{#if user.isStaff}
+				<Tooltip.Root>
+					<Tooltip.Trigger asChild let:builder>
+						<Button builders={[builder]} variant="ghost" size="icon"><Wrench /></Button>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
+						<p>This user is staff.</p>
+					</Tooltip.Content>
+				</Tooltip.Root>
+			{/if}
 		</div>
 		<div class="flex justify-end">
-			{#if user.Username == getCookie('username')}
+			{#if user.Username == CurrentUser}
 				<Edit />
+			{:else}
+				<More Username={user.Username} />
+				{#if !isFollowing && isFollowed}
+					<Button variant="outline" on:click={() => follow()}>Follow Back</Button>
+				{:else if isFollowing}
+					<Button variant="destructive" on:click={() => unfollow()}>Unfollow</Button>
+				{:else}
+					<Button variant="outline" on:click={() => follow()}>Follow</Button>
+				{/if}
 			{/if}
 		</div>
 	</div>
 
-	{user.Bio}a
+	{user.Bio}
 
 	<div class="flex items-center mt-2 mb-2">
+		<Link size="20" />
+		<a class="ms-1 me-2 hover:underline" href={'https://' + user.link}>{user.link}</a>
 		<CalendarDays size="20" />
 		<span class="ms-1">Joined {joined}</span>
 	</div>
 
 	<div class="flex items-center mt-2 mb-3">
-		<span class="me-3">{user.Following} Following</span>
-		<span>{user.Followers} Followers</span>
+		<span class="me-3">{following} Following</span>
+		<span>{follower} Followers</span>
 	</div>
 	<Separator />
 	{#if posts != null}
@@ -79,6 +132,131 @@
 			<Tweets {post} />
 		{/each}
 	{:else}
-		<h3>Loading...</h3>
+		<div class="loader">
+			<span class="loader-text">loading</span>
+			<span class="load"></span>
+		</div>
 	{/if}
 </div>
+
+<style>
+	.loader {
+		width: 80px;
+		height: 50px;
+		position: relative;
+	}
+
+	.loader-text {
+		position: absolute;
+		top: 0;
+		padding: 0;
+		margin: 0;
+		color: #c8b6ff;
+		animation: text_713 3.5s ease both infinite;
+		font-size: 0.8rem;
+		letter-spacing: 1px;
+	}
+
+	.load {
+		background-color: #9a79ff;
+		border-radius: 50px;
+		display: block;
+		height: 16px;
+		width: 16px;
+		bottom: 0;
+		position: absolute;
+		transform: translateX(64px);
+		animation: loading_713 3.5s ease both infinite;
+	}
+
+	.load::before {
+		position: absolute;
+		content: '';
+		width: 100%;
+		height: 100%;
+		background-color: #d1c2ff;
+		border-radius: inherit;
+		animation: loading2_713 3.5s ease both infinite;
+	}
+
+	@keyframes text_713 {
+		0% {
+			letter-spacing: 1px;
+			transform: translateX(0px);
+		}
+
+		40% {
+			letter-spacing: 2px;
+			transform: translateX(26px);
+		}
+
+		80% {
+			letter-spacing: 1px;
+			transform: translateX(32px);
+		}
+
+		90% {
+			letter-spacing: 2px;
+			transform: translateX(0px);
+		}
+
+		100% {
+			letter-spacing: 1px;
+			transform: translateX(0px);
+		}
+	}
+
+	@keyframes loading_713 {
+		0% {
+			width: 16px;
+			transform: translateX(0px);
+		}
+
+		40% {
+			width: 100%;
+			transform: translateX(0px);
+		}
+
+		80% {
+			width: 16px;
+			transform: translateX(64px);
+		}
+
+		90% {
+			width: 100%;
+			transform: translateX(0px);
+		}
+
+		100% {
+			width: 16px;
+			transform: translateX(0px);
+		}
+	}
+
+	@keyframes loading2_713 {
+		0% {
+			transform: translateX(0px);
+			width: 16px;
+		}
+
+		40% {
+			transform: translateX(0%);
+			width: 80%;
+		}
+
+		80% {
+			width: 100%;
+			transform: translateX(0px);
+		}
+
+		90% {
+			width: 80%;
+			transform: translateX(15px);
+		}
+
+		100% {
+			transform: translateX(0px);
+			width: 16px;
+		}
+	}
+</style>

@@ -6,15 +6,11 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Sun, Moon } from 'lucide-svelte';
 	import { toggleMode, userPrefersMode } from 'mode-watcher';
-	import { SvelteToast, toast } from '@zerodevx/svelte-toast/dist';
+	import { Toaster, toast } from 'svelte-sonner';
+
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		const app = new SvelteToast({
-			target: document.body,
-			props: {}
-		});
-	});
+	onMount(() => {});
 	function makecookie(key, value, days) {
 		var expirationDate = new Date();
 		expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000 * days);
@@ -33,8 +29,8 @@
 		document.cookie = cname + '=;' + expires + ';path=/';
 	}
 
-	var username;
-	var password;
+	var username, password;
+	var usernameReg, passwordReg, emailReg;
 	if ($userPrefersMode == 'dark') {
 		toggleMode();
 	}
@@ -53,13 +49,42 @@
 			if (response.ok) {
 				const jsonData = await response.json();
 				let uid = jsonData.UserID;
-				toast.push('Login success, please wait...');
+				toast.success('Login success, please wait...');
 				makecookie('uid', uid, 3);
 				makecookie('username', jsonData.Username, 3);
+				makecookie('isVerified', jsonData.isVerified, 3);
+				makecookie('isStaff', jsonData.isStaff, 3);
 				location.reload();
 			} else {
 				console.error('Error:', response.statusText);
-				toast.push('Login failed, wrong password/username.');
+				toast.error('Login failed, wrong password/username.');
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	}
+	async function register() {
+		const formData = new FormData();
+		formData.append('username', usernameReg);
+		formData.append('password', passwordReg);
+		formData.append('email', emailReg);
+		try {
+			const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/register', {
+				method: 'POST',
+				body: formData
+			});
+			if (response.ok) {
+				const jsonData = await response.json();
+				toast.success('Successfully registered.');
+			} else {
+				const errorData = await response.json();
+				console.error('Error:', errorData.error);
+				for (let field in errorData.error) {
+					for (let i = 0; i < errorData.error[field].length; i++) {
+						toast.error(`Error in ${field}: ${errorData.error[field][i]}`);
+					}
+				}
+				toast.error('Registration failed, please try again.');
 			}
 		} catch (error) {
 			console.error('Error:', error);
@@ -67,6 +92,7 @@
 	}
 </script>
 
+<Toaster richColors position="top-left" />
 <div class="h-screen overflow-hidden">
 	<div class="flex justify-end m-5">
 		<Button on:click={toggleMode} variant="outline" size="icon">
@@ -100,7 +126,7 @@
 							<Label for="username">Password</Label>
 							<Input
 								id="password"
-								placeholder="@peduarte"
+								placeholder="kent"
 								name="password"
 								type="password"
 								bind:value={password}
@@ -121,19 +147,19 @@
 					<Card.Content class="space-y-2">
 						<div class="space-y-1">
 							<Label for="current">Email</Label>
-							<Input id="current" type="text" />
+							<Input id="current" type="text" bind:value={emailReg} />
 						</div>
 						<div class="space-y-1">
 							<Label for="current">Username</Label>
-							<Input id="current" type="text" />
+							<Input id="current" type="text" bind:value={usernameReg} />
 						</div>
 						<div class="space-y-1">
 							<Label for="new">Password</Label>
-							<Input id="new" type="password" />
+							<Input id="new" type="password" bind:value={passwordReg} />
 						</div>
 					</Card.Content>
 					<Card.Footer>
-						<Button>Register</Button>
+						<Button on:click={() => register()}>Register</Button>
 					</Card.Footer>
 				</Card.Root>
 			</Tabs.Content>

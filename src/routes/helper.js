@@ -110,5 +110,52 @@ export async function removeFromBookmark(BookmarkID) {
 export function logout() {
 	deleteCookie('uid');
 	deleteCookie('username');
+	deleteCookie('isStaff');
+	deleteCookie('isVerified');
 	location.reload();
+}
+
+export async function doFollow(FollowerID, FollowingID) {
+	const formData = new FormData();
+	formData.append('FollowerID', FollowerID);
+	formData.append('FollowingID', FollowingID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doFollow', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+
+export async function doUnFollow(FollowerID, FollowingID) {
+	const formData = new FormData();
+	formData.append('FollowerID', FollowerID);
+	formData.append('FollowingID', FollowingID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doUnfollow', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+export function isLoggedin() {
+	if (getCookie('uid') == '') {
+		window.location.href = '/';
+	}
 }

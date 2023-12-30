@@ -6,8 +6,11 @@
 	import { onMount } from 'svelte';
 	import { getCookie } from './helper';
 	let link = '';
+	let isStaff, isVerified;
 	onMount(() => {
 		link = '/' + getCookie('username');
+		isStaff = getCookie('isStaff');
+		isVerified = getCookie('isVerified');
 	});
 </script>
 
@@ -24,6 +27,18 @@
 </div>
 
 <div class="navbar justify-end">
+	<img
+		alt="picture of a duck"
+		src="https://svgshare.com/i/11Qf.svg"
+		style="height: 15%;"
+		class="hover:cursor-pointer"
+		on:click={() => (window.location.href = '/home')}
+	/>
+	{#if isStaff == true}
+		<p class="font-mono text-center px-5 rounded inline-block">staff</p>
+	{:else if isVerified == true}
+		<p class="font-mono text-center px-5 rounded inline-block">verified</p>
+	{/if}
 	<div>
 		<Button href="/home" variant="ghost" class="my-4 text-center p-3 px-5 rounded inline-block">
 			<div class="flex items-center">

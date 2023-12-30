@@ -7,7 +7,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import Navbar from './../navbar.svelte';
-	import Search from './../home/seachResult.svelte';
+	import RightSide from './../rightSide.svelte';
+
 	/** @type {import('./$types').PageData} */
 
 	export let data;
@@ -25,25 +26,5 @@
 		</div>
 	</div>
 	<Separator orientation="vertical" />
-	<div class="flex space-y-1 w-1/4 flex-col">
-		<div class="flex-1">
-			<Input
-				on:input={() => search()}
-				type="search"
-				placeholder="search"
-				class="max-w-xs"
-				bind:value={userInput}
-			/>
-			<div>
-				{#if searchResult != null}
-					{#each searchResult as search}
-						<Search {search} />
-					{/each}
-				{/if}
-			</div>
-		</div>
-		<div class="flex-1 justify-between">
-			<div class="flex h-5 items-center">Direct Messages</div>
-		</div>
-	</div>
+	<RightSide />
 </div>
