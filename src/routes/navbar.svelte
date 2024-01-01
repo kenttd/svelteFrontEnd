@@ -1,5 +1,5 @@
 <script>
-	import { Home, Search, Bookmark, User, LogOut, Sun, Moon } from 'lucide-svelte';
+	import { Home, Search, Bookmark, User, LogOut, Sun, Moon, BadgeCheck } from 'lucide-svelte';
 	import { toggleMode } from 'mode-watcher';
 	import { Button } from '$lib/components/ui/button';
 	import { logout } from './helper';
@@ -63,6 +63,21 @@
 			</div>
 		</Button>
 	</div>
+	{#if isVerified == true}
+		<div>
+			<Button
+				href="/bookmark"
+				variant="ghost"
+				class="my-4 text-center p-3 px-5 rounded inline-block"
+			>
+				<div class="flex items-center">
+					<BadgeCheck size="20" class="me-2" />
+					Verified tabs
+				</div>
+			</Button>
+		</div>
+	{/if}
+
 	<div>
 		<Button href={link} variant="ghost" class="my-4 text-center p-3 px-5 rounded inline-block">
 			<div class="flex items-center">

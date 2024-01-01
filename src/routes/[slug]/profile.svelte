@@ -5,7 +5,7 @@
 	import Tweets from './Tweets.svelte';
 	import More from './more.svelte';
 	import { onMount } from 'svelte';
-	import { CalendarDays, BadgeCheck, Wrench, Link } from 'lucide-svelte';
+	import { CalendarDays, BadgeCheck, Wrench, Link, Mail } from 'lucide-svelte';
 	import { getCookie, doFollow, doUnFollow } from './../helper';
 	import Edit from './editProfile.svelte';
 	import * as Tooltip from '$lib/components/ui/tooltip';
@@ -68,8 +68,8 @@
 	}
 </script>
 
-<div>
-	<div class="flex items-center">
+<div class="w-full">
+	<div class="flex items-center justify-between">
 		<div class="flex items-center mb-2 me-[30%]">
 			<Avatar.Root class="me-2">
 				<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -102,6 +102,9 @@
 				<Edit />
 			{:else}
 				<More Username={user.Username} />
+				<Button variant="ghost" class="rounded-full" href="messages/{user.Username}"
+					><Mail /></Button
+				>
 				{#if !isFollowing && isFollowed}
 					<Button variant="outline" on:click={() => follow()}>Follow Back</Button>
 				{:else if isFollowing}
@@ -131,6 +134,9 @@
 		{#each posts as post}
 			<Tweets {post} />
 		{/each}
+		{#if posts.length == 0}
+			<div class="text-lg mt-3">This user doesn't a post yet.</div>
+		{/if}
 	{:else}
 		<div class="loader">
 			<span class="loader-text">loading</span>

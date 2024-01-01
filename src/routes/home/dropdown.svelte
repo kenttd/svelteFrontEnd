@@ -3,25 +3,23 @@
 	import { addToBookmark } from '../helper';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { SvelteToast, toast } from '@zerodevx/svelte-toast/dist';
 	import { onMount } from 'svelte';
-	onMount(() => {
-		const app = new SvelteToast({
-			target: document.body,
-			props: {}
-		});
-	});
+	import { Toaster, toast } from 'svelte-sonner';
+
+	onMount(() => {});
 	export let TweetID;
 	async function addBookmark() {
 		const data = await addToBookmark(TweetID);
 		console.log('bookmark', data);
 		if (data.message == null) {
-			toast.push('Added tweet to bookmarks.');
+			toast.success('Added tweet to bookmarks.');
 		} else {
-			toast.push('Tweet already in bookmarks.');
+			toast.error('Tweet already in bookmarks.');
 		}
 	}
 </script>
+
+<Toaster richColors position="top-left" />
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>

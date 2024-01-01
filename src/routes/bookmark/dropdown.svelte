@@ -3,25 +3,23 @@
 	import { removeFromBookmark } from '../helper';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { SvelteToast, toast } from '@zerodevx/svelte-toast/dist';
+	import { Toaster, toast } from 'svelte-sonner';
+
 	import { onMount } from 'svelte';
-	onMount(() => {
-		const app = new SvelteToast({
-			target: document.body,
-			props: {}
-		});
-	});
+	onMount(() => {});
 	export let BookmarkID, TweetID;
 	async function removeBookmark() {
 		const data = await removeFromBookmark(BookmarkID);
 		console.log('bookmark', data);
 		if (data.message == 'success') {
-			toast.push('Removed tweet from bookmarks.');
+			toast.success('Removed tweet from bookmarks.');
 		} else {
-			toast.push('Failed to remove bookmarks.');
+			toast.error('Failed to remove bookmarks.');
 		}
 	}
 </script>
+
+<Toaster richColors position="top-left" />
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>

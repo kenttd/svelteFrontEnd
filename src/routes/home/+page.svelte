@@ -80,13 +80,13 @@
 			})
 			.then((data) => {
 				posts = data.posts;
-				longPoll();
+				setTimeout(longPoll, 1000);
 			})
 			.catch((error) => {
 				// Handle errors
 				console.error('Error during long poll:', error);
 				// Optional: You might want to introduce a delay before retrying
-				// setTimeout(longPoll, 1000); // retry after 1 second
+				setTimeout(longPoll, 1000); // retry after 1 second
 			});
 	}
 </script>
@@ -124,7 +124,8 @@
 				<div class="loader items-center">
 					<span class="loader-text">loading</span>
 					<span class="load"></span>
-				</div>{/if}
+				</div>
+			{/if}
 		</div>
 	</div>
 
@@ -136,21 +137,6 @@
 	:global(body) {
 		overflow: hidden;
 	}
-	/* .navbar {
-		background-color: rgb(48, 169, 244);
-	}
-
-	.navbar button {
-		justify-content: center;
-		align-items: center;
-		display: flex;
-		font-size: larger;
-		font-weight: bolder;
-	}
-
-	svg {
-		margin-right: 20px;
-	} */
 	.loader {
 		width: 80px;
 		height: 50px;

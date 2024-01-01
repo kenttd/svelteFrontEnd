@@ -20,7 +20,6 @@
 		if (document.cookie.includes('uid')) {
 			window.location.href = '/home';
 		}
-		// deleteCookie('uid');
 	}
 	function deleteCookie(cname) {
 		const d = new Date();

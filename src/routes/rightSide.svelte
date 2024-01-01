@@ -82,7 +82,7 @@
 			class="max-w-xs"
 			bind:value={userInput}
 		/>
-		<div class="mt-4">
+		<div class="mt-4 h-1/4 overflow-y-scroll">
 			{#if searchResult != null}
 				{#each searchResult as search}
 					<Search {search} />
@@ -100,6 +100,9 @@
 				{#each messages as message}
 					<Preview {message} />
 				{/each}
+				{#if messages.length == 0}
+					<div>You haven't messaged anyone yet.</div>
+				{/if}
 			{:else}
 				Loading...
 			{/if}

@@ -1,7 +1,5 @@
 <script>
 	import { Separator } from '$lib/components/ui/separator';
-	import { Sun, Moon, LogOut } from 'lucide-svelte';
-	import { toggleMode, userPrefersMode } from 'mode-watcher';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import Navbar from './../navbar.svelte';
@@ -41,6 +39,9 @@
 			}
 		} catch (error) {
 			console.error('Error:', error);
+		} finally {
+			// Make the next long poll request after a delay (e.g., 1 second)
+			setTimeout(getBookmarkPost, 1000);
 		}
 	}
 	function search() {}
