@@ -41,7 +41,7 @@
 			console.error('Error:', error);
 		} finally {
 			// Make the next long poll request after a delay (e.g., 1 second)
-			setTimeout(getBookmarkPost, 1000);
+			// setTimeout(getBookmarkPost, 1000);
 		}
 	}
 	function search() {}

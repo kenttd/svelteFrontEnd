@@ -1,6 +1,6 @@
 <script>
 	import { Bookmark, Link, Share } from 'lucide-svelte';
-	import { addToBookmark } from '../helper';
+	import { addToBookmark } from '../../helper';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { onMount } from 'svelte';
@@ -17,10 +17,6 @@
 			toast.error('Tweet already in bookmarks.');
 		}
 	}
-	function copy() {
-		navigator.clipboard.writeText('quacker.online/quack/' + TweetID);
-		toast.success('Copied link to clipboard.');
-	}
 </script>
 
 <Toaster richColors position="top-left" />
@@ -30,7 +26,9 @@
 		<Button builders={[builder]} variant="ghost"><Share size="19" /></Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="w-56">
-		<DropdownMenu.Item on:click={() => copy()}>
+		<DropdownMenu.Item
+			on:click={() => navigator.clipboard.writeText('quacker.online/quack/' + TweetID)}
+		>
 			<Link class="mr-2 h-4 w-4" />
 			<button>Copy Link</button>
 		</DropdownMenu.Item>

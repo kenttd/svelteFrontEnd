@@ -1,17 +1,23 @@
 export const prerender = false;
 export const ssr = true;
-import { error } from '@sveltejs/kit';
-
+import { error, redirect } from '@sveltejs/kit';
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-	if (params.slug != '') {
-		try {
-			const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/' + params.slug);
+	const { slug } = params;
 
+	if (slug !== '') {
+		console.log(slug);
+
+		try {
+			const response = await fetch(
+				'https://quacker-1fcd875a5802.herokuapp.com/api/listFollower/' + slug,
+				{
+					method: 'GET'
+				}
+			);
 			if (!response.ok) {
-				// Handle non-success status codes here
 				if (response.status === 404) {
-					throw error(404, {
+					throw new error(404, {
 						message: 'Not found'
 					});
 				} else {

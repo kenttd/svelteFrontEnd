@@ -6,7 +6,7 @@
 	import More from './more.svelte';
 	import { onMount } from 'svelte';
 	import { CalendarDays, BadgeCheck, Wrench, Link, Mail } from 'lucide-svelte';
-	import { getCookie, doFollow, doUnFollow } from './../helper';
+	import { getCookie, doFollow, doUnFollow } from './../../helper';
 	import Edit from './editProfile.svelte';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	export let user;
@@ -27,7 +27,7 @@
 	// Displaying the result
 	function getUserPost() {
 		return fetch(
-			'https://quacker-1fcd875a5802.herokuapp.com/api/getpost/' +
+			'https://quacker-1fcd875a5802.herokuapp.com/api/listLikes/' +
 				user.UserID +
 				'/' +
 				getCookie('uid'),
@@ -101,12 +101,7 @@
 			{#if user.Username == CurrentUser}
 				<Edit />
 			{:else}
-				<More
-					Username={user.Username}
-					isVerified={user.isVerified}
-					isBanned={user.isBanned}
-					isStaff={user.isStaff}
-				/>
+				<More Username={user.Username} />
 				<Button variant="ghost" class="rounded-full" href="messages/{user.Username}"
 					><Mail /></Button
 				>
@@ -137,10 +132,12 @@
 		<Button variant="link" href="/{user.Username}/followers">{follower} Followers</Button>
 	</div>
 	<div class="flex justify-between pb-1">
-		<Button variant="ghost" class="w-1/2"
-			><span class="underline decoration-indigo-500 underline-offset-8">Posts</span></Button
+		<Button variant="ghost" class="w-1/2" href="/{user.Username}"
+			><span class="">Posts</span></Button
 		>
-		<Button variant="ghost" class="w-1/2" href="/{user.Username}/likes">Likes</Button>
+		<Button variant="ghost" class="w-1/2"
+			><span class="underline decoration-indigo-500 underline-offset-8">Likes</span></Button
+		>
 	</div>
 	<Separator />
 
@@ -149,7 +146,7 @@
 			<Tweets {post} currUser={user.Username} />
 		{/each}
 		{#if posts.length == 0}
-			<div class="text-lg mt-3">This user doesn't have a post yet.</div>
+			<div class="text-lg mt-3">This user doesn't have any likes yet.</div>
 		{/if}
 	{:else}
 		<div class="loader">

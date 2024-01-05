@@ -6,8 +6,8 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
-	import Navbar from './../navbar.svelte';
-	import RightSide from './../rightSide.svelte';
+	import Navbar from './../../navbar.svelte';
+	import RightSide from './../../rightSide.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;

@@ -67,6 +67,51 @@ export async function doUnLike(TweetID, LikeID) {
 	}
 }
 
+export async function doRetweet(tweetID, update, RetweetID) {
+	// console.log(tweetID, update, LikeID);
+	const formData = new FormData();
+	formData.append('UserID', getCookie('uid'));
+	formData.append('TweetID', tweetID);
+	formData.append('update', update);
+	formData.append('RetweetID', RetweetID);
+
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doRetweet', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+
+export async function doUnRetweet(TweetID, RetweetID) {
+	const formData = new FormData();
+	formData.append('UserID', getCookie('uid'));
+	formData.append('TweetID', TweetID);
+	formData.append('RetweetID', RetweetID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doUnRetweet', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData.LikeID;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+
 export async function addToBookmark(TweetID) {
 	const formData = new FormData();
 	formData.append('UserID', getCookie('uid'));

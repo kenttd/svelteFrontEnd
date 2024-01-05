@@ -78,7 +78,7 @@
 					<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
 					<Avatar.Fallback>CN</Avatar.Fallback>
 				</Avatar.Root>
-				<Button variant="link">{post.user.Username}</Button>
+				<Button variant="link" href="/{post.user.Username}">{post.user.Username}</Button>
 			</Card.Title>
 			<Card.Description class="ms-4">{result}</Card.Description>
 		</div>

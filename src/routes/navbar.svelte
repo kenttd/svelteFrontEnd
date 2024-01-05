@@ -1,6 +1,7 @@
 <script>
 	import { Home, Search, Bookmark, User, LogOut, Sun, Moon, BadgeCheck } from 'lucide-svelte';
 	import { toggleMode } from 'mode-watcher';
+	import { ModeWatcher } from 'mode-watcher';
 	import { Button } from '$lib/components/ui/button';
 	import { logout } from './helper';
 	import { onMount } from 'svelte';
@@ -14,6 +15,7 @@
 	});
 </script>
 
+<ModeWatcher defaultMode={'dark'}></ModeWatcher>
 <div class="justify-start">
 	<Button on:click={toggleMode} variant="outline" size="icon">
 		<Sun
@@ -66,7 +68,7 @@
 	{#if isVerified == true}
 		<div>
 			<Button
-				href="/bookmark"
+				href="/quack/verified"
 				variant="ghost"
 				class="my-4 text-center p-3 px-5 rounded inline-block"
 			>

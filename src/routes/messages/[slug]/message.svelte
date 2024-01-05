@@ -13,7 +13,7 @@
 {/if}
 
 <style>
-	@use postcss-nested;
+	/* @use postcss-nested; */
 
 	:root {
 		--send-bg: #0b93f6;
