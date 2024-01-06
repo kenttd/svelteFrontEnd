@@ -3,7 +3,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import * as HoverCard from '$lib/components/ui/hover-card';
-	import { doLike, getCookie, doUnLike, doRetweet, doUnRetweet } from './../helper';
+	import { doLike, getCookie, doUnLike, doRetweet, doUnRetweet, formatTime } from './../helper';
 	import { onMount } from 'svelte';
 	import Dropdown from './dropdown.svelte';
 	import { Repeat2, MessageCircle, Heart } from 'lucide-svelte';
@@ -19,37 +19,7 @@
 			colorRetweet = 'green';
 		}
 	});
-	// Current date and time
-	// Current date and time
-	const now = new Date();
 	let likes, retweet, replies;
-
-	// Your specific date and time in the format "YYYY-MM-DD HH:mm:ss"
-	const specificDateStr = post.created_at;
-	const specificDate = new Date(specificDateStr.replace(/-/g, '/'));
-
-	// Calculate the difference in milliseconds
-	const differenceInMilliseconds = specificDate - now;
-
-	// Convert milliseconds to days, hours, and minutes
-	const days = Math.floor(Math.abs(differenceInMilliseconds) / (1000 * 60 * 60 * 24));
-	const hours = Math.floor(
-		(Math.abs(differenceInMilliseconds) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-	);
-	const minutes = Math.floor((Math.abs(differenceInMilliseconds) % (1000 * 60 * 60)) / (1000 * 60));
-
-	// Construct the result string based on the time difference
-	let result = '';
-
-	if (days > 0) {
-		const month = specificDate.toLocaleString('en-US', { month: 'short' });
-		const date = specificDate.getDate();
-		result += `${month} ${date}`;
-	} else if (hours > 0) {
-		result += `${hours}h `;
-	} else if (minutes > 0 || (days === 0 && hours === 0)) {
-		result += `${minutes}m`;
-	}
 	let liked = post.liked;
 	let LikeID = post.likeid ?? '';
 	let retweeted = post.retweeted;
@@ -87,8 +57,6 @@
 		}
 	}
 	console.log('liked', liked);
-	// console.log(minutes, hours, days);
-	console.log(specificDateStr);
 	likes = post.LikesCount;
 	retweet = post.RetweetsCount;
 	replies = post.RepliesCount;
@@ -97,7 +65,7 @@
 
 <Card.Root class=" mt-5">
 	<Card.Header>
-		<div class="flex justify-start">
+		<div class="flex justify-start items-center">
 			<Card.Title class="flex align-middle">
 				<Avatar.Root class="me-2">
 					<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -105,7 +73,7 @@
 				</Avatar.Root>
 				<Button variant="link" href="/{post.user.Username}">{post.user.Username}</Button>
 			</Card.Title>
-			<Card.Description class="ms-4">{result}</Card.Description>
+			<Card.Description class="ms-4">{formatTime(post.created_at)}</Card.Description>
 		</div>
 	</Card.Header>
 

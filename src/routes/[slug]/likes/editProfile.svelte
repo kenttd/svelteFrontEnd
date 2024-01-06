@@ -3,6 +3,12 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
+	import { getCookie, editProfile } from '../../helper';
+	export let bio, link;
+	function edit() {
+		editProfile(getCookie('uid'), bio, link);
+		location.reload();
+	}
 </script>
 
 <Dialog.Root>
@@ -16,16 +22,16 @@
 		</Dialog.Header>
 		<div class="grid gap-4 py-4">
 			<div class="grid grid-cols-4 items-center gap-4">
-				<Label class="text-right">Name</Label>
-				<Input id="name" value="Pedro Duarte" class="col-span-3" />
+				<Label class="text-right">Bio</Label>
+				<Input id="username" class="col-span-3" bind:value={bio} />
 			</div>
 			<div class="grid grid-cols-4 items-center gap-4">
-				<Label class="text-right">Username</Label>
-				<Input id="username" value="@peduarte" class="col-span-3" />
+				<Label class="text-right">Link</Label>
+				<Input id="username" bind:value={link} class="col-span-3" />
 			</div>
 		</div>
 		<Dialog.Footer>
-			<Button type="submit">Save changes</Button>
+			<Button type="submit" on:click={() => edit()}>Save changes</Button>
 		</Dialog.Footer>
 	</Dialog.Content>
 </Dialog.Root>

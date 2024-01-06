@@ -69,6 +69,9 @@
 			}
 		} catch (error) {
 			console.error('Error:', error);
+		} finally {
+			// Make the next long poll request after a delay (e.g., 1 second)
+			setTimeout(getLatestMessage, 1000);
 		}
 	}
 </script>

@@ -52,9 +52,11 @@
 				isFollowing = jsonData.isFollowing;
 				console.log('asli');
 				console.log(posts);
+				setTimeout(getUserPost, 1000);
 			})
 			.catch((error) => {
 				console.error('Error:', error);
+				setTimeout(getUserPost, 1000);
 			});
 	}
 
@@ -99,7 +101,7 @@
 		</div>
 		<div class="flex justify-end">
 			{#if user.Username == CurrentUser}
-				<Edit />
+				<Edit bio={user.Bio} link={user.link} UserID={user.UserID} />
 			{:else}
 				<More Username={user.Username} />
 				<Button variant="ghost" class="rounded-full" href="messages/{user.Username}"

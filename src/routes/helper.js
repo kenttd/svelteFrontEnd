@@ -1,3 +1,5 @@
+import { Toaster, toast } from 'svelte-sonner';
+
 export function test() {
 	return 'hey';
 }
@@ -199,8 +201,168 @@ export async function doUnFollow(FollowerID, FollowingID) {
 		console.error('Error:', error);
 	}
 }
+
+export async function doVerify(UserID) {
+	const formData = new FormData();
+	formData.append('UserID', UserID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doVerify', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			toast.success('Successfully verified this user.');
+
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+export async function doUnverify(UserID) {
+	const formData = new FormData();
+	formData.append('UserID', UserID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doUnverify', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+export async function doStaff(UserID) {
+	const formData = new FormData();
+	formData.append('UserID', UserID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doStaff', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+export async function doUnstaff(UserID) {
+	const formData = new FormData();
+	formData.append('UserID', UserID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doUnstaff', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+export async function doBan(UserID) {
+	const formData = new FormData();
+	formData.append('UserID', UserID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doBan', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+export async function doUnban(UserID) {
+	const formData = new FormData();
+	formData.append('UserID', UserID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/doUnban', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+}
+export async function editProfile(UserID, Bio, link) {
+	const formData = new FormData();
+	formData.append('UserID', UserID);
+	formData.append('Bio', Bio);
+	formData.append('link', link);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/editProfile', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+	location.reload();
+}
 export function isLoggedin() {
 	if (getCookie('uid') == '') {
 		window.location.href = '/';
 	}
+}
+
+export function formatTime(inputTime) {
+	const date = new Date(inputTime);
+	if (isNaN(date.getTime())) {
+		return inputTime;
+	}
+	const year = date.getFullYear();
+	const monthNames = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+	];
+	const month = monthNames[date.getMonth()];
+	const day = date.getDate();
+	const hours = date.getHours();
+	const minutes = date.getMinutes();
+	const time = hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+	return month + ', ' + day + ' ' + year + ' ' + time;
 }

@@ -2,10 +2,14 @@
 	import { MoreHorizontal, Link, BadgeCheck, Gavel, Wrench } from 'lucide-svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
-	export let Username;
-	import { getCookie } from '../helper';
+	import { Toaster, toast } from 'svelte-sonner';
+
+	export let Username, UserID;
+	import { getCookie, doVerify, doUnverify, doStaff, doUnstaff, doBan, doUnban } from '../helper';
 	export let isVerified, isStaff, isBanned;
 </script>
+
+<Toaster richColors position="top-left" />
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
@@ -20,34 +24,34 @@
 		</DropdownMenu.Item>
 		{#if getCookie('isStaff') == true}
 			{#if !isVerified}
-				<DropdownMenu.Item>
+				<DropdownMenu.Item on:click={() => doVerify(UserID)}>
 					<BadgeCheck class="mr-2 h-4 w-4" />
 					<button>Verify this user</button>
 				</DropdownMenu.Item>
 			{:else}
-				<DropdownMenu.Item>
+				<DropdownMenu.Item on:click={() => doUnverify(UserID)}>
 					<BadgeCheck class="mr-2 h-4 w-4" />
 					<button>Unverify this user</button>
 				</DropdownMenu.Item>
 			{/if}
 			{#if !isBanned}
-				<DropdownMenu.Item>
+				<DropdownMenu.Item on:click={() => doBan(UserID)}>
 					<Gavel class="mr-2 h-4 w-4" />
 					<button>Ban this user</button>
 				</DropdownMenu.Item>
 			{:else}
-				<DropdownMenu.Item>
+				<DropdownMenu.Item on:click={() => doUnban(UserID)}>
 					<Gavel class="mr-2 h-4 w-4" />
 					<button>Unban this user</button>
 				</DropdownMenu.Item>
 			{/if}
 			{#if !isStaff}
-				<DropdownMenu.Item>
+				<DropdownMenu.Item on:click={() => doStaff(UserID)}>
 					<Wrench class="mr-2 h-4 w-4" />
 					<button>Make this user staff</button>
 				</DropdownMenu.Item>
 			{:else}
-				<DropdownMenu.Item>
+				<DropdownMenu.Item on:click={() => doUnstaff(UserID)}>
 					<Wrench class="mr-2 h-4 w-4" />
 					<button>Remove staff status</button>
 				</DropdownMenu.Item>

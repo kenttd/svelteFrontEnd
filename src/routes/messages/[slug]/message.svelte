@@ -1,13 +1,17 @@
 <script>
+	import { MoreHorizontal } from 'lucide-svelte';
+	// import * as AlertDialog from '$lib/components/ui/alert-dialog';
+	import { Button } from '$lib/components/ui/button';
 	export let message;
 </script>
 
+<Button variant="icon" class="iconnn"><MoreHorizontal />a</Button>
 {#if message.sentByRequester == true}
-	<div class="justify-end flex">
+	<div class="justify-end flex contenttt">
 		<p class="send">{message.MessageContent}</p>
 	</div>
 {:else}
-	<div class="flex justify-start">
+	<div class="flex justify-start contenttt">
 		<p class="receive">{message.MessageContent}</p>
 	</div>
 {/if}
@@ -22,7 +26,13 @@
 		--receive-text: black;
 		--page-background: white;
 	}
-
+	:global(.contenttt:hover .iconnn) {
+		opacity: 1;
+	}
+	:global(.iconnn) {
+		opacity: 0;
+		transition: opacity 0.3s ease-in-out;
+	}
 	p {
 		max-width: 255px;
 		word-wrap: break-word;

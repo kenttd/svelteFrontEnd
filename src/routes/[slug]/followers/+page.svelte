@@ -26,7 +26,9 @@
 				<span class="text-lg underline underline-offset-4">{slug}</span>
 			</div>
 			<div class="flex">
-				<Button variant="ghost" class="w-1/3" href="">Verified Followers</Button>
+				<Button variant="ghost" class="w-1/3" href="/{slug}/verified_followers"
+					>Verified Followers</Button
+				>
 				<Button variant="ghost" class="w-1/3 underline decoration-indigo-500 underline-offset-8"
 					>Followers</Button
 				>

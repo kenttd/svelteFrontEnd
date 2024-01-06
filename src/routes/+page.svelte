@@ -56,7 +56,8 @@
 				location.reload();
 			} else {
 				console.error('Error:', response.statusText);
-				toast.error('Login failed, wrong password/username.');
+				const error = await response.json();
+				toast.error(error.message);
 			}
 		} catch (error) {
 			console.error('Error:', error);

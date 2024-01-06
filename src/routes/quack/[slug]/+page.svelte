@@ -4,7 +4,7 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { Button } from '$lib/components/ui/button';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { getCookie } from '../../helper';
+	import { getCookie, formatTime } from '../../helper';
 	import { onMount } from 'svelte';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Toaster, toast } from 'svelte-sonner';
@@ -21,6 +21,7 @@
 		MessageCircle
 	} from 'lucide-svelte';
 	import Tweets from './Tweet.svelte';
+	let formattedTime;
 	onMount(() => {
 		getReply();
 	});
@@ -108,7 +109,7 @@
 		<div class="flex pt-2">
 			<p>{tweetInfoFull.TweetContent}</p>
 		</div>
-		<div class="flex pt-3 pb-2">time here</div>
+		<div class="flex pt-3 pb-2">{formatTime(tweetInfoFull.created_at)}</div>
 		<hr />
 		<div class="flex items-center py-3">
 			<span class="flex me-4 items-center"

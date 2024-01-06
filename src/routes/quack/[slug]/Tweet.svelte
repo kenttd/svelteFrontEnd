@@ -1,6 +1,6 @@
 <script>
 	import * as Avatar from '$lib/components/ui/avatar';
-
+	import { formatTime } from './../../helper';
 	export let post;
 </script>
 
@@ -14,7 +14,8 @@
 	</div>
 	<div class="w-5/6">
 		<div>
-			{post.user.Username}
+			<span class="me-2">{post.user.Username}</span>
+			<span class="font-thin">{formatTime(post.created_at)}</span>
 		</div>
 		<div>{post.ReplyContent}</div>
 	</div>

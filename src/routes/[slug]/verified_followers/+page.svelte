@@ -12,8 +12,8 @@
 	const { slug } = $page.params;
 	onMount(() => {});
 	export let data;
-	console.log('data', data.data.following);
-	let following = data.data.following;
+	console.log('data', data.data.follower);
+	let follower = data.data.follower;
 </script>
 
 <div class="flex space-x-4 text-sm justify-end h-screen mt-3">
@@ -26,29 +26,29 @@
 				<span class="text-lg underline underline-offset-4">{slug}</span>
 			</div>
 			<div class="flex">
-				<Button variant="ghost" class="w-1/3" href="/{slug}/verified_followers"
-					>Verified Followers</Button
+				<Button
+					variant="ghost"
+					class="w-1/3 underline decoration-indigo-500 underline-offset-8"
+					href="">Verified Followers</Button
 				>
-				<Button variant="ghost" class="w-1/3" href="/{slug}/followers">Followers</Button>
-				<Button variant="ghost" class="w-1/3 underline decoration-indigo-500 underline-offset-8"
-					>Following</Button
-				>
+				<Button variant="ghost" class="w-1/3 " href="/{slug}/followers">Followers</Button>
+				<Button variant="ghost" class="w-1/3 " href="/{slug}/following">Following</Button>
 			</div>
 			<hr />
-			{#if following != null}
-				{#each following as f}
+			{#if follower != null}
+				{#each follower as f}
 					<div class="flex items-center my-3">
 						<Avatar.Root class="me-2">
 							<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
 							<Avatar.Fallback>CN</Avatar.Fallback>
 						</Avatar.Root>
-						<Button variant="link" href="/{f.following.Username}" class=""
-							>{f.following.Username}</Button
+						<Button variant="link" href="/{f.follower.Username}" class=""
+							>{f.follower.Username}</Button
 						>
 					</div>
 				{/each}
-				{#if following.length == 0}
-					this user doesnt follow anyone
+				{#if follower.length == 0}
+					no one follows this user
 				{/if}
 			{:else}
 				loading...
