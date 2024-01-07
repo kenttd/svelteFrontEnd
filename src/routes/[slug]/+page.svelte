@@ -8,8 +8,12 @@
 	import { Input } from '$lib/components/ui/input';
 	import Navbar from './../navbar.svelte';
 	import RightSide from './../rightSide.svelte';
-
+	import { onMount } from 'svelte';
+	import { isLoggedin } from '../helper';
 	/** @type {import('./$types').PageData} */
+	onMount(() => {
+		isLoggedin();
+	});
 	export let data;
 	let user = data.data.user;
 </script>
@@ -18,7 +22,7 @@
 	<Navbar />
 	<Separator orientation="vertical" />
 	<div class="space-y-1 w-1/2">
-		<div class="flex h-5">
+		<div class="flex h-4/6">
 			<Profile {user} />
 		</div>
 	</div>

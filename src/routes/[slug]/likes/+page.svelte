@@ -18,7 +18,7 @@
 	<Navbar />
 	<Separator orientation="vertical" />
 	<div class="space-y-1 w-1/2">
-		<div class="flex h-5">
+		<div class="flex h-4/6">
 			<Profile {user} />
 		</div>
 	</div>

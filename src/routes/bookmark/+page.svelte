@@ -54,11 +54,13 @@
 		<div class="font-bold text-2xl">Bookmarks</div>
 		<div class="font-light text-base">@{username}</div>
 		<Separator />
-		<div class="mt-4">
+		<div class="mt-4 h-5/6 overflow-y-scroll">
 			{#if posts != null}
 				{#each posts as post}
 					<Tweets bookmark={post} />
 				{/each}
+			{:else}
+				loading...
 			{/if}
 		</div>
 	</div>

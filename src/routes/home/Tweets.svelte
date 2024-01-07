@@ -105,7 +105,7 @@
 				</div>
 			</div>
 			<div class="flex items-center">
-				<Dropdown TweetID={post.TweetID} />
+				<Dropdown TweetID={post.TweetID} UserID={post.user.UserID}/>
 				<Button variant="ghost" href="/quack/{post.TweetID}">See Quack</Button>
 			</div>
 		</div>

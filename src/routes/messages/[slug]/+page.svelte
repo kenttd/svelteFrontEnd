@@ -2,7 +2,7 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import Navbar from './../../navbar.svelte';
 	import RightSide from './../../rightSide.svelte';
-	import { getCookie } from '../../helper';
+	import { getCookie, isLoggedin } from '../../helper';
 	import { onMount } from 'svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { Info, SendHorizontal, Wrench, BadgeCheck } from 'lucide-svelte';
@@ -17,6 +17,7 @@
 	let message = '',
 		noMessage = false;
 	onMount(() => {
+		isLoggedin();
 		getMessages();
 	});
 	let user = data.data.user;

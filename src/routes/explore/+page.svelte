@@ -4,11 +4,15 @@
 	import Navbar from './../navbar.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { page } from '$app/stores';
-	import { getCookie, deleteCookie } from '../helper';
+	import { getCookie, deleteCookie, isLoggedin } from '../helper';
 	import RightSide from './../rightSide.svelte';
 	import Tweets from './../home/Tweets.svelte';
 	import Select from './Select.svelte';
+	import { onMount } from 'svelte';
 
+	onMount(() => {
+		isLoggedin();
+	});
 	let posts;
 	const url = $page.url;
 	const hasVal = url.searchParams.has('q');

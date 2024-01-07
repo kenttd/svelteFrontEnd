@@ -1,12 +1,17 @@
 <script>
-	import { MoreHorizontal, Link, BadgeCheck, Gavel, Wrench } from 'lucide-svelte';
+	import { MoreHorizontal, Link, BadgeCheck, Gavel, Wrench, Trash2 } from 'lucide-svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
 	import { Toaster, toast } from 'svelte-sonner';
+	import { onMount } from 'svelte';
 
 	export let Username, UserID;
 	import { getCookie, doVerify, doUnverify, doStaff, doUnstaff, doBan, doUnban } from '../helper';
 	export let isVerified, isStaff, isBanned;
+	let currIsStaff;
+	onMount(() => {
+		currIsStaff = getCookie('isStaff');
+	});
 </script>
 
 <Toaster richColors position="top-left" />
@@ -22,7 +27,7 @@
 			<Link class="mr-2 h-4 w-4" />
 			<button>Copy link to profile</button>
 		</DropdownMenu.Item>
-		{#if getCookie('isStaff') == true}
+		{#if currIsStaff == true}
 			{#if !isVerified}
 				<DropdownMenu.Item on:click={() => doVerify(UserID)}>
 					<BadgeCheck class="mr-2 h-4 w-4" />
@@ -56,6 +61,12 @@
 					<button>Remove staff status</button>
 				</DropdownMenu.Item>
 			{/if}
+			<DropdownMenu.Item
+				on:click={() => (window.location.href = '/' + Username + '/deleted_quack')}
+			>
+				<Trash2 class="mr-2 h-4 w-4" />
+				<button>View user's deleted quack</button>
+			</DropdownMenu.Item>
 		{/if}
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

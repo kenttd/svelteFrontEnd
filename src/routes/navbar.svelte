@@ -2,16 +2,19 @@
 	import { Home, Search, Bookmark, User, LogOut, Sun, Moon, BadgeCheck } from 'lucide-svelte';
 	import { toggleMode } from 'mode-watcher';
 	import { ModeWatcher } from 'mode-watcher';
+	import * as Avatar from '$lib/components/ui/avatar';
+
 	import { Button } from '$lib/components/ui/button';
 	import { logout } from './helper';
 	import { onMount } from 'svelte';
 	import { getCookie } from './helper';
 	let link = '';
-	let isStaff, isVerified;
+	let isStaff, isVerified, username;
 	onMount(() => {
 		link = '/' + getCookie('username');
 		isStaff = getCookie('isStaff');
 		isVerified = getCookie('isVerified');
+		username = getCookie('username');
 	});
 </script>
 
@@ -99,5 +102,12 @@
 				Logout
 			</div>
 		</Button>
+	</div>
+	<div class="flex items-center">
+		<Avatar.Root class="me-2">
+			<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
+			<Avatar.Fallback>CN</Avatar.Fallback>
+		</Avatar.Root>
+		{username}
 	</div>
 </div>

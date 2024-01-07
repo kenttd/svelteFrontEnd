@@ -2,12 +2,12 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { Button } from '$lib/components/ui/button';
-	import Tweets from './Tweets.svelte';
-	import More from './more.svelte';
+	import Tweets from './../Tweets.svelte';
+	import More from './../more.svelte';
 	import { onMount } from 'svelte';
 	import { CalendarDays, BadgeCheck, Wrench, Link, Mail } from 'lucide-svelte';
 	import { getCookie, doFollow, doUnFollow } from './../../helper';
-	import Edit from './editProfile.svelte';
+	import Edit from './../editProfile.svelte';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	export let user;
 	let posts, isFollowing, isFollowed;
@@ -144,9 +144,11 @@
 	<Separator />
 
 	{#if posts != null}
-		{#each posts as post}
-			<Tweets {post} currUser={user.Username} />
-		{/each}
+		<div class="h-full overflow-y-scroll">
+			{#each posts as post}
+				<Tweets {post} currUser={user.Username} />
+			{/each}
+		</div>
 		{#if posts.length == 0}
 			<div class="text-lg mt-3">This user doesn't have any likes yet.</div>
 		{/if}

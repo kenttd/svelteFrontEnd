@@ -232,6 +232,8 @@ export async function doUnverify(UserID) {
 		});
 		if (response.ok) {
 			const jsonData = await response.json();
+			toast.success('Successfully unverified this user.');
+
 			return jsonData;
 		} else {
 			console.error('Error:', response.statusText);
@@ -250,6 +252,8 @@ export async function doStaff(UserID) {
 		});
 		if (response.ok) {
 			const jsonData = await response.json();
+			toast.success('Successfully make this user staff.');
+
 			return jsonData;
 		} else {
 			console.error('Error:', response.statusText);
@@ -268,6 +272,8 @@ export async function doUnstaff(UserID) {
 		});
 		if (response.ok) {
 			const jsonData = await response.json();
+			toast.success('Successfully remove staff role from this user.');
+
 			return jsonData;
 		} else {
 			console.error('Error:', response.statusText);
@@ -286,6 +292,8 @@ export async function doBan(UserID) {
 		});
 		if (response.ok) {
 			const jsonData = await response.json();
+			toast.success('Successfully banned this user.');
+
 			return jsonData;
 		} else {
 			console.error('Error:', response.statusText);
@@ -304,6 +312,8 @@ export async function doUnban(UserID) {
 		});
 		if (response.ok) {
 			const jsonData = await response.json();
+			toast.success('Successfully unbanned this user.');
+
 			return jsonData;
 		} else {
 			console.error('Error:', response.statusText);
@@ -312,6 +322,30 @@ export async function doUnban(UserID) {
 		console.error('Error:', error);
 	}
 }
+
+export async function deleteTweet(TweetID) {
+	const formData = new FormData();
+	formData.append('TweetID', TweetID);
+	try {
+		const response = await fetch('https://quacker-1fcd875a5802.herokuapp.com/api/deleteTweet', {
+			method: 'POST',
+			body: formData
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			toast.success('Successfully deleted quack.');
+
+			return jsonData;
+		} else {
+			console.error('Error:', response.statusText);
+			toast.error('Failed deleting quack.');
+		}
+	} catch (error) {
+		console.error('Error:', error);
+	}
+	location.reload();
+}
+
 export async function editProfile(UserID, Bio, link) {
 	const formData = new FormData();
 	formData.append('UserID', UserID);

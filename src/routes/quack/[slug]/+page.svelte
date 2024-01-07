@@ -4,7 +4,7 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { Button } from '$lib/components/ui/button';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { getCookie, formatTime } from '../../helper';
+	import { getCookie, formatTime, isLoggedin } from '../../helper';
 	import { onMount } from 'svelte';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Toaster, toast } from 'svelte-sonner';
@@ -23,6 +23,7 @@
 	import Tweets from './Tweet.svelte';
 	let formattedTime;
 	onMount(() => {
+		isLoggedin();
 		getReply();
 	});
 
@@ -54,7 +55,7 @@
 			console.error('Error:', error);
 		} finally {
 			// Make the next long poll request after a delay (e.g., 1 second)
-			// setTimeout(getReply, 1000);
+			setTimeout(getReply, 1000);
 		}
 	}
 	async function reply() {
@@ -102,7 +103,7 @@
 				<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
 				<Avatar.Fallback>CN</Avatar.Fallback>
 			</Avatar.Root>
-			<span class="me-2 text-lg">{user.Username}</span>
+			<Button class="text-lg" variant="link" href={'/' + user.Username}>{user.Username}</Button>
 			{#if user.isVerified}<Wrench size="20" class="me-2" />{/if}
 			{#if user.isStaff}<BadgeCheck size="20" />{/if}
 		</div>
@@ -129,13 +130,19 @@
 				>Reply</Button
 			>
 		</div>
-		{#if replies != []}
-			{#each replies as reply}
-				<Tweets post={reply} />
-			{/each}
-		{:else}
-			loading...
-		{/if}
+
+		<hr />
+		<div class="h-3/6 overflow-y-scroll">
+			{#if replies != []}
+				{#each replies as reply}
+					<Tweets post={reply} />
+
+					<hr />
+				{/each}
+			{:else}
+				loading...
+			{/if}
+		</div>
 	</div>
 	<Separator orientation="vertical" />
 	<RightSide />

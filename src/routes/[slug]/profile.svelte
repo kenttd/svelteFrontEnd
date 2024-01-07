@@ -148,9 +148,11 @@
 	<Separator />
 
 	{#if posts != null}
-		{#each posts as post}
-			<Tweets {post} currUser={user.Username} />
-		{/each}
+		<div class="h-full overflow-y-scroll">
+			{#each posts as post}
+				<Tweets {post} currUser={user.Username}/>
+			{/each}
+		</div>
 		{#if posts.length == 0}
 			<div class="text-lg mt-3">This user doesn't have a post yet.</div>
 		{/if}

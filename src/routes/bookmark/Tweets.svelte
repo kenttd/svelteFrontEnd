@@ -62,9 +62,6 @@
 			console.log(data);
 		}
 	}
-	// console.log('liked', liked);
-	// console.log(minutes, hours, days);
-	// console.log(specificDateStr);
 	likes = post.LikesCount;
 	retweet = post.RetweetsCount;
 	replies = post.RepliesCount;
@@ -112,6 +109,7 @@
 		</div>
 
 		<Dropdown BookmarkID={bookmark.BookmarkID} TweetID={post.TweetID} />
+		<Button variant="ghost" href="/quack/{post.TweetID}">See quack</Button>
 	</Card.Footer>
 </Card.Root>
 
