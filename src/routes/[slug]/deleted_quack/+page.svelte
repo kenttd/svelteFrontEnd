@@ -13,7 +13,7 @@
 
 	let role,
 		posts,
-		allowed = false;
+		allowed = true;
 	onMount(() => {
 		role = getCookie('isVerified') == true || getCookie('isStaff') == true ? 'verified' : 'not';
 		getDeletedPost();
@@ -28,11 +28,11 @@
 			);
 			// Check if the request was successful (status code 2xx)
 			if (response.ok) {
-				allowed = true;
 				const jsonData = await response.json();
 				console.log(jsonData);
 				posts = jsonData.posts;
 			} else {
+				allowed = false;
 				console.error('Error a:', response.statusText);
 				if (response.status == 403) {
 					console.log('success');
